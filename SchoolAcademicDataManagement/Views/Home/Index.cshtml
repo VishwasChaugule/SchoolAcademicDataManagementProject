@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Mark Sheet";
+}
+
+<h2>Enter Student Details</h2>
+
+<form asp-controller="Home" asp-action="ViewMarks" method="post">
+    <div class="validation-summary-errors text-danger" asp-validation-summary="All"></div> <!-- Validation Summary -->
+    <div class="form-group">
+        <label for="studentId">Student ID:</label>
+        <input type="text" class="form-control" id="studentId" name="studentId" required>
+    </div>
+    <div class="form-group">
+        <label for="classId">Class ID:</label>
+        <input type="text" class="form-control" id="classId" name="classId" required>
+    </div>
+    <button type="submit" class="btn btn-primary">View Marksheet</button>
+</form>
+

@@ -1,0 +1,35 @@
+﻿@model MarksheetViewModel
+
+@{
+    ViewData["Title"] = "Mark Sheet";
+}
+
+<h2>Mark Sheet</h2>
+
+<p><strong>Student ID:</strong> @Model.StudentID</p>
+<p><strong>Roll Number:</strong> @Model.RollNumber</p>
+<p><strong>Name:</strong> @Model.Name</p>
+<p><strong>Class ID:</strong> @Model.ClassID</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Exam</th>
+            <th>Marks Obtained</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mark in Model.Marks)
+        {
+            <tr>
+                <td>@mark.SubjectName</td>
+                <td>@mark.ExamName</td>
+                <td>@mark.MarksObtained</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><strong>Overall Percentage:</strong> @Model.OverallPercentage</p>
+
