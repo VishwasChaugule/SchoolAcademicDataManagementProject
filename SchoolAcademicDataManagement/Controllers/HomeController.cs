@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using SchoolAcademicDataManagement.Filters;
 using SchoolAcademicDataManagement.Models;
 using SchoolAcademicDataManagement.Models.Academic;
 
 namespace SchoolAcademicDataManagement.Controllers;
 
+[ServiceFilter(typeof(AdminAuthorizationFilter))]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

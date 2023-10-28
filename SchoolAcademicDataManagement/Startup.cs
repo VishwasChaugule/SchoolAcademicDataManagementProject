@@ -1,6 +1,8 @@
 ﻿using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using SchoolAcademicDataManagement.Data;
+using SchoolAcademicDataManagement.Filters;
+using SchoolAcademicDataManagement.Services;
 
 namespace SchoolAcademicDataManagement
 {
@@ -23,6 +25,15 @@ namespace SchoolAcademicDataManagement
                 client.BaseAddress = new Uri("http://localhost:5217");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             });
+
+            services.AddScoped<AdminAuthorizationFilter>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddSession();
+
+            /*services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(AdminAuthorizationFilter));
+            });*/
 
             services.AddScoped<IDataSeeder, DataSeeder>();
         }
@@ -54,6 +65,7 @@ namespace SchoolAcademicDataManagement
                 dataSeeder.SeedData();
             }
 
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
