@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolAcademicDataManagement.Data;
-using SchoolAcademicDataManagement.Models;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using SchoolAcademicDataManagement.Models.Academic;
 
 namespace SchoolAcademicDataManagement.Controllers
 {
@@ -26,7 +19,10 @@ namespace SchoolAcademicDataManagement.Controllers
         [HttpGet("{studentId}/{classId}")]
         public IActionResult GetMarks(int studentId, int classId)
         {
-            var marksheet = _context.Marks
+            try
+            {
+                // Get Marks with student id and class id
+                var marksheet = _context.Marks
                 .Include(m => m.Student)
                 .Include(m => m.Subject)
                 .Include(m => m.Exam)
@@ -39,22 +35,30 @@ namespace SchoolAcademicDataManagement.Controllers
                 })
                 .ToList();
 
-            if (marksheet == null || marksheet.Count == 0)
-            {
-                return NotFound("Marksheet not found for the given student and class.");
+                if (marksheet == null || marksheet.Count == 0)
+                {
+                    return NotFound("Marksheet not found for the given student and class.");
+                }
+
+                // Get Student Info
+                var studentInfo = _context.Students.FirstOrDefault(s => s.StudentID == studentId);
+                // Assign Data to MarksheetViewModel
+                var marksheetViewModel = new MarksheetViewModel
+                {
+                    StudentID = studentId, // Set the student ID
+                    RollNumber = studentInfo?.RollNumber,
+                    Name = studentInfo?.Name,
+                    ClassID = classId, // Set the class ID
+                    Marks = marksheet,
+                    OverallPercentage = CalculateOverallPercentage(marksheet)
+                };
+
+                return Ok(marksheetViewModel);
             }
-
-            var marksheetViewModel = new MarksheetViewModel
+            catch (Exception ex)
             {
-                StudentID = studentId, // Set the student ID
-                RollNumber = _context.Students.FirstOrDefault(s => s.StudentID == studentId)?.RollNumber,
-                Name = _context.Students.FirstOrDefault(s => s.StudentID == studentId)?.Name,
-                ClassID = classId, // Set the class ID
-                Marks = marksheet,
-                OverallPercentage = CalculateOverallPercentage(marksheet)
-            };
-
-            return Ok(marksheetViewModel);
+                return StatusCode(500, "Internal Server Error: " + ex.Message);
+            }
         }
 
         private decimal CalculateOverallPercentage(List<MarkViewModel> marks)

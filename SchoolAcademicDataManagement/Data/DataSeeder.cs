@@ -1,9 +1,8 @@
-﻿using System;
-using SchoolAcademicDataManagement.Models;
+﻿using SchoolAcademicDataManagement.Models.Academic;
 
 namespace SchoolAcademicDataManagement.Data
 {
-	public class DataSeeder : IDataSeeder
+    public class DataSeeder : IDataSeeder
 	{
         private readonly SchoolDBContext _context;
 

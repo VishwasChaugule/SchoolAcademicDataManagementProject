@@ -2852,11 +2852,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vishwaschaugule/Projects/SchoolAcademicDataManagement/SchoolAcademicDataManagement/SchoolAcademicDataManagement.csproj",
+      "projectUniqueName": "/Users/vishwaschaugule/Documents/Work/SchoolAcademicDataManagementProject/SchoolAcademicDataManagement/SchoolAcademicDataManagement.csproj",
       "projectName": "SchoolAcademicDataManagement",
-      "projectPath": "/Users/vishwaschaugule/Projects/SchoolAcademicDataManagement/SchoolAcademicDataManagement/SchoolAcademicDataManagement.csproj",
+      "projectPath": "/Users/vishwaschaugule/Documents/Work/SchoolAcademicDataManagementProject/SchoolAcademicDataManagement/SchoolAcademicDataManagement.csproj",
       "packagesPath": "/Users/vishwaschaugule/.nuget/packages/",
-      "outputPath": "/Users/vishwaschaugule/Projects/SchoolAcademicDataManagement/SchoolAcademicDataManagement/obj/",
+      "outputPath": "/Users/vishwaschaugule/Documents/Work/SchoolAcademicDataManagementProject/SchoolAcademicDataManagement/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/vishwaschaugule/.nuget/NuGet/NuGet.Config"

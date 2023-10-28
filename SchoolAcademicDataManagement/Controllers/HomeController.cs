@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SchoolAcademicDataManagement.Models;
+using SchoolAcademicDataManagement.Models.Academic;
 
 namespace SchoolAcademicDataManagement.Controllers;
 
@@ -31,14 +30,18 @@ public class HomeController : Controller
     {
         try
         {
+            // Send a GET request to the specified API endpoint using the HttpClient (_client) and await the response.
             HttpResponseMessage response = await _client.GetAsync($"api/marks/{studentId}/{classId}");
             if (response.IsSuccessStatusCode)
             {
+                // If the response is successful, deserialize the JSON content of the response to a MarksheetViewModel object.
                 var marksheet = await response.Content.ReadFromJsonAsync<MarksheetViewModel>();
+                // Return a view containing the retrieved marksheet data.
                 return View(marksheet);
             }
             else
             {
+                // Redirect the user to the "Index" view, which might contain an error message indicating the failure.
                 ModelState.AddModelError(string.Empty, "Marksheet not found for the given student and class.");
                 return View("Index");
             }
@@ -47,6 +50,7 @@ public class HomeController : Controller
         {
             var message = ex.Message;
             ModelState.AddModelError(string.Empty, message);
+            // Redirect the user to the "Index" view, which might contain an error message indicating the failure.
             return View("Index");
         }
         
@@ -58,4 +62,3 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
-

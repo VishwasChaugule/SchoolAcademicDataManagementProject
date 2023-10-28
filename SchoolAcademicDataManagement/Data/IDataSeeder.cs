@@ -1,7 +1,6 @@
-﻿using System;
-namespace SchoolAcademicDataManagement.Data
+﻿namespace SchoolAcademicDataManagement.Data
 {
-	public interface IDataSeeder
+    public interface IDataSeeder
 	{
         void SeedData();
     }
