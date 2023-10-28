@@ -3,7 +3,7 @@ using SchoolAcademicDataManagement.Models;
 
 namespace SchoolAcademicDataManagement.Data
 {
-	public class DataSeeder
+	public class DataSeeder : IDataSeeder
 	{
         private readonly SchoolDBContext _context;
 

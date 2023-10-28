@@ -11,7 +11,6 @@ namespace SchoolAcademicDataManagement
     public class Startup
     {
         public IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,11 +22,13 @@ namespace SchoolAcademicDataManagement
             services.AddDbContext<SchoolDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IDataSeeder, DataSeeder>();
             // Add other services...
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -36,6 +37,20 @@ namespace SchoolAcademicDataManagement
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
+            }
+
+            // Migrate database to the latest version
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<SchoolDBContext>();
+                dbContext.Database.Migrate();
+            }
+
+            // Seed data
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var dataSeeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+                dataSeeder.SeedData();
             }
 
             //app.UseHttpsRedirection();

@@ -31,6 +31,12 @@ namespace SchoolAcademicDataManagement.Controllers
                 .Include(m => m.Subject)
                 .Include(m => m.Exam)
                 .Where(m => m.StudentID == studentId && m.Student.ClassID == classId)
+                .Select(m => new MarkViewModel
+                {
+                    SubjectName = m.Subject.SubjectName,
+                    ExamName = m.Exam.ExamName,
+                    MarksObtained = m.MarksObtained
+                })
                 .ToList();
 
             if (marksheet == null || marksheet.Count == 0)
@@ -38,7 +44,38 @@ namespace SchoolAcademicDataManagement.Controllers
                 return NotFound("Marksheet not found for the given student and class.");
             }
 
-            return Ok(marksheet);
+            var marksheetViewModel = new MarksheetViewModel
+            {
+                StudentID = studentId, // Set the student ID
+                RollNumber = _context.Students.FirstOrDefault(s => s.StudentID == studentId)?.RollNumber,
+                Name = _context.Students.FirstOrDefault(s => s.StudentID == studentId)?.Name,
+                ClassID = classId, // Set the class ID
+                Marks = marksheet,
+                OverallPercentage = CalculateOverallPercentage(marksheet)
+            };
+
+            return Ok(marksheetViewModel);
+        }
+
+        private decimal CalculateOverallPercentage(List<MarkViewModel> marks)
+        {
+            if (marks == null || marks.Count == 0)
+            {
+                return 0; // Return 0 if there are no marks
+            }
+
+            decimal totalPercentage = 0;
+
+            // Calculate average percentage for each subject
+            foreach (var mark in marks)
+            {
+                // Assuming MarksObtained is the percentage for each subject
+                totalPercentage += mark.MarksObtained;
+            }
+
+            // Calculate overall average percentage
+            decimal overallPercentage = totalPercentage / marks.Count;
+            return overallPercentage;
         }
     }
 }

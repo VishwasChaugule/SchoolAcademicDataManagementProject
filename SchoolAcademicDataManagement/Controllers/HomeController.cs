@@ -29,17 +29,27 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<IActionResult> ViewMarks(int studentId, int classId)
     {
-        HttpResponseMessage response = await _client.GetAsync($"api/marks/{studentId}/{classId}");
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var marksheet = await response.Content.ReadFromJsonAsync<MarksheetViewModel>();
-            return View(marksheet);
+            HttpResponseMessage response = await _client.GetAsync($"api/marks/{studentId}/{classId}");
+            if (response.IsSuccessStatusCode)
+            {
+                var marksheet = await response.Content.ReadFromJsonAsync<MarksheetViewModel>();
+                return View(marksheet);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Marksheet not found for the given student and class.");
+                return View("Index");
+            }
         }
-        else
+        catch (HttpRequestException ex)
         {
-            ModelState.AddModelError(string.Empty, "Marksheet not found for the given student and class.");
+            var message = ex.Message;
+            ModelState.AddModelError(string.Empty, message);
             return View("Index");
         }
+        
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
