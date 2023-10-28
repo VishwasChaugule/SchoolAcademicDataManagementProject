@@ -16,14 +16,52 @@ namespace SchoolAcademicDataManagement.Controllers
             _context = context;
         }
 
-        [HttpGet("{studentId}/{classId}")]
-        public IActionResult GetMarks(int studentId, int classId)
+        [HttpGet("{rollNumber}/{classId}")]
+        public IActionResult GetMarks(string rollNumber, int classId)
         {
             try
             {
+                // Get Student Info
+                var studentInfo = GetStudentInfoByRollNumber(rollNumber);
+                if (studentInfo == null)
+                {
+                    return NotFound("Student not found for the given student roll number and class id.");
+                }
+
                 // Get Marks with student id and class id
-                var marksheet = _context.Marks
-                .Include(m => m.Student)
+                var marksheet = GetMarksByStudentIdAndClassId(studentInfo.StudentID, classId);
+                if (marksheet == null || marksheet.Count == 0)
+                {
+                    return NotFound("Marksheet not found for the given student and class.");
+                }
+
+                // Assign Data to MarksheetViewModel
+                var marksheetViewModel = new MarksheetViewModel
+                {
+                    StudentID = studentInfo.StudentID, // Set the student ID
+                    RollNumber = studentInfo.RollNumber, // Set the Roll number
+                    Name = studentInfo.Name, // Set the student Name
+                    ClassID = classId, // Set the class ID
+                    Marks = marksheet, // Set Marksheet
+                    OverallPercentage = CalculateOverallPercentage(marksheet) // Set Percentage
+                };
+
+                return Ok(marksheetViewModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error: " + ex.Message);
+            }
+        }
+
+        private Student GetStudentInfoByRollNumber(string rollNumber)
+        {
+            return _context.Students.FirstOrDefault(s => s.RollNumber == rollNumber);
+        }
+
+        private List<MarkViewModel> GetMarksByStudentIdAndClassId(int studentId, int classId)
+        {
+            return _context.Marks
                 .Include(m => m.Subject)
                 .Include(m => m.Exam)
                 .Where(m => m.StudentID == studentId && m.Student.ClassID == classId)
@@ -34,31 +72,6 @@ namespace SchoolAcademicDataManagement.Controllers
                     MarksObtained = m.MarksObtained
                 })
                 .ToList();
-
-                if (marksheet == null || marksheet.Count == 0)
-                {
-                    return NotFound("Marksheet not found for the given student and class.");
-                }
-
-                // Get Student Info
-                var studentInfo = _context.Students.FirstOrDefault(s => s.StudentID == studentId);
-                // Assign Data to MarksheetViewModel
-                var marksheetViewModel = new MarksheetViewModel
-                {
-                    StudentID = studentId, // Set the student ID
-                    RollNumber = studentInfo?.RollNumber,
-                    Name = studentInfo?.Name,
-                    ClassID = classId, // Set the class ID
-                    Marks = marksheet,
-                    OverallPercentage = CalculateOverallPercentage(marksheet)
-                };
-
-                return Ok(marksheetViewModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal Server Error: " + ex.Message);
-            }
         }
 
         private decimal CalculateOverallPercentage(List<MarkViewModel> marks)

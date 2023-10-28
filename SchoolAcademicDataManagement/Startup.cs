@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Net.Http.Headers;
+using Microsoft.EntityFrameworkCore;
 using SchoolAcademicDataManagement.Data;
 
 namespace SchoolAcademicDataManagement
@@ -16,6 +17,12 @@ namespace SchoolAcademicDataManagement
             services.AddControllersWithViews();
             services.AddDbContext<SchoolDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddHttpClient("SchoolAcademicDataApi", client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5217");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
 
             services.AddScoped<IDataSeeder, DataSeeder>();
         }

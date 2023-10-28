@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using SchoolAcademicDataManagement.Models;
 using SchoolAcademicDataManagement.Models.Academic;
@@ -11,13 +10,10 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _client;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
-        _client = new HttpClient();
-        _client.BaseAddress = new Uri("http://localhost:5217");
-        _client.DefaultRequestHeaders.Accept.Clear();
-        _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _client = httpClientFactory.CreateClient("SchoolAcademicDataApi");
     }
 
     public IActionResult Index()
@@ -26,12 +22,13 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ViewMarks(int studentId, int classId)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ViewMarks(string rollNumber, int classId)
     {
         try
         {
             // Send a GET request to the specified API endpoint using the HttpClient (_client) and await the response.
-            HttpResponseMessage response = await _client.GetAsync($"api/marks/{studentId}/{classId}");
+            HttpResponseMessage response = await _client.GetAsync($"api/marks/{rollNumber}/{classId}");
             if (response.IsSuccessStatusCode)
             {
                 // If the response is successful, deserialize the JSON content of the response to a MarksheetViewModel object.
