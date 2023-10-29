@@ -15,17 +15,18 @@ namespace SchoolAcademicDataManagement.Services
 
         public ApplicationUser Authenticate(string email, string password)
         {
-            
             try
             {
-                var user = _context.ApplicationUsers.SingleOrDefault(u => u.Email == email);
-                var isPasswordValid = user != null ? PasswordHasher.VerifyPassword(password, user.Password) : false;
-                if (isPasswordValid)
+                // Get user by email
+                var user = GetUserByEmail(email);
+                // Check user input password is valid or not
+                if (user != null && PasswordIsValid(password, user.Password))
+                {
                     return user;
+                }
             }
-            catch (Exception ex)
-            {
-                
+            catch (Exception)
+            { 
             }
 
             return null;
@@ -35,15 +36,24 @@ namespace SchoolAcademicDataManagement.Services
         {
             try
             {
-                // Hash Password
+                // Hash the input Password
                 user.Password = PasswordHasher.HashPassword(user.Password);
                 _context.ApplicationUsers.Add(user);
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
             }
+        }
+
+        private ApplicationUser GetUserByEmail(string email)
+        {
+            return _context.ApplicationUsers.SingleOrDefault(u => u.Email == email);
+        }
+
+        private bool PasswordIsValid(string password, string hashedPassword)
+        {
+            return PasswordHasher.VerifyPassword(password, hashedPassword);
         }
     }
 }

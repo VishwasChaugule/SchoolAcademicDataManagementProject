@@ -1,6 +1,4 @@
 ﻿using System.Text;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using SchoolAcademicDataManagement.Models.User;
 using SchoolAcademicDataManagement.Services;
@@ -33,7 +31,7 @@ namespace SchoolAcademicDataManagement.Controllers
 
                 if (user != null)
                 {
-                    // Authenticate successful, redirect to home or a secure page
+                    // Authenticate successful, redirect to home page
                     var userRole = Encoding.UTF8.GetBytes(user.Role);
                     HttpContext.Session.Set("UserRole", userRole);
                     HttpContext.Session.SetString("IsAuthenticated", "True");
@@ -83,7 +81,7 @@ namespace SchoolAcademicDataManagement.Controllers
             // Clear session data (if used)
             HttpContext.Session.Clear();
 
-            // Redirect to the home page or any specific page after logout
+            // Redirect to the Login page after logout
             return RedirectToAction("Login", "Account");
         }
     }

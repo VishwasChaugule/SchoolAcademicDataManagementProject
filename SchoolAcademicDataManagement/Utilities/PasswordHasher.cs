@@ -24,7 +24,9 @@ namespace SchoolAcademicDataManagement.Utilities
 
         public static bool VerifyPassword(string inputPassword, string storedHashedPassword)
         {
+            // Hash input password
             string inputPasswordHash = HashPassword(inputPassword);
+            // Compare hashed input password and stored hashed password
             return string.Equals(inputPasswordHash, storedHashedPassword, StringComparison.OrdinalIgnoreCase);
         }
     }
