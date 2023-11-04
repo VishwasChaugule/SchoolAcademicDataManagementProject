@@ -19,7 +19,7 @@ Follow these steps to set up the IP address in the authorized network of the Clo
 3. **Clone the Repository:**
    - Clone this repository to your local machine using Git:
      ```
-     git clone <repository-url>
+     git clone https://github.com/VishwasChaugule/SchoolAcademicDataManagementProject.git
      ```
    
 4. **Run the Application:**
