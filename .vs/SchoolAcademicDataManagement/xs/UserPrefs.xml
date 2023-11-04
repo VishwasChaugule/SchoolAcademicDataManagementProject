@@ -1,20 +1,62 @@
 ﻿<Properties StartupConfiguration="{EB6A0E7F-68D5-4D32-8AAB-5770AE4596D6}|http">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.SchoolAcademicDataManagement PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SchoolAcademicDataManagement/Startup.cs">
+    <Files>
+      <File FileName="SchoolAcademicDataManagement/Data/DataSeeder.cs" />
+      <File FileName="SchoolAcademicDataManagement/Data/SchoolDBContext.cs" />
+      <File FileName="SchoolAcademicDataManagement/Data/IDataSeeder.cs" />
+      <File FileName="SchoolAcademicDataManagement/Controllers/HomeController.cs" />
+      <File FileName="SchoolAcademicDataManagement/Controllers/MarksController.cs" />
+      <File FileName="SchoolAcademicDataManagement/Program.cs" />
+      <File FileName="SchoolAcademicDataManagement/Startup.cs" Line="58" Column="1" />
+      <File FileName="SchoolAcademicDataManagement/Views/Home/ViewMarks.cshtml" />
+      <File FileName="SchoolAcademicDataManagement/Views/Home/Index.cshtml" />
+      <File FileName="SchoolAcademicDataManagement/Views/Shared/_Layout.cshtml" />
+      <File FileName="SchoolAcademicDataManagement/Models/Academic/Mark.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/Academic/Student.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/Academic/MarkViewModel.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/Academic/Subject.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/Academic/Exam.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/Academic/Class.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/Academic/MarksheetViewModel.cs" />
+      <File FileName="SchoolAcademicDataManagement/Filters/AdminAuthorizationFilter.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/User/ApplicationUser.cs" />
+      <File FileName="SchoolAcademicDataManagement/Services/IUserService.cs" />
+      <File FileName="SchoolAcademicDataManagement/Services/UserService.cs" Line="36" Column="1" />
+      <File FileName="SchoolAcademicDataManagement/Controllers/AccountController.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/User/LoginViewModel.cs" />
+      <File FileName="SchoolAcademicDataManagement/Models/User/RegisterViewModel.cs" />
+      <File FileName="SchoolAcademicDataManagement/Views/Account/Login.cshtml" />
+      <File FileName="SchoolAcademicDataManagement/Views/Account/Register.cshtml" />
+      <File FileName="SchoolAcademicDataManagement/Utilities/PasswordHasher.cs" />
+      <File FileName="SchoolAcademicDataManagement/appsettings.json" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="SchoolAcademicDataManagement" expanded="True" selected="True">
-            <Node name="SchoolAcademicDataManagement" expanded="True" />
+          <Node name="SchoolAcademicDataManagement">
+            <Node name="SchoolAcademicDataManagement" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="Filters" expanded="True" />
+              <Node name="Migrations" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="User" expanded="True" />
+              </Node>
+              <Node name="Properties" expanded="True" />
+              <Node name="Services" expanded="True" />
+              <Node name="Utilities" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.SchoolAcademicDataManagement PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" FirstBuild="True" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

@@ -1,11 +1,12 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using SchoolAcademicDataManagement.Filters;
 using SchoolAcademicDataManagement.Models.User;
 using SchoolAcademicDataManagement.Services;
 
 namespace SchoolAcademicDataManagement.Controllers
 {
-
+    [RequestResponseTracingFilter]
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
